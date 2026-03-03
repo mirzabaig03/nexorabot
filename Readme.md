@@ -83,30 +83,6 @@ Create a file named:
 
 Use `.env.docker.example` as reference.
 
-Example structure:
-
-```env
-CLERK_SECRET_KEY=
-DOMAIN=http://localhost:3000/
-
-SUPABASE_API_URL=
-SUPABASE_SECRET_KEY=    # Supabase Service Role Key
-
-REDIS_URL=redis://redis:6379/0
-
-OPENAI_API_KEY=
-
-AWS_ACCESS_KEY_ID=
-AWS_SECRET_ACCESS_KEY=
-AWS_ENDPOINT_URL_S3=https://t3.storage.dev
-AWS_REGION=auto
-```
-
-Important:
-
-* `SUPABASE_SECRET_KEY` must be the **Service Role Key**.
-* This file must NOT be committed.
-
 ---
 
 ## 2️⃣ Frontend Configuration
@@ -125,18 +101,7 @@ Create a file named:
 
 Use `.env.example` as reference.
 
-Example:
-
-```env
-NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=
-NEXT_PUBLIC_API_URL=http://localhost:8000
-```
-
-Important:
-
-* Do NOT add service role keys in the frontend.
-* Only public keys should be exposed here.
-
+``
 ---
 
 # 🚀 Running the Project
@@ -179,24 +144,6 @@ Frontend will be available at:
 ```
 http://localhost:3000
 ```
-
----
-
-# 🧪 Testing the Application
-
-1. Open the frontend in your browser.
-2. Sign in using Clerk authentication.
-3. Upload a document.
-4. Trigger ingestion.
-5. The Celery worker will process the document asynchronously.
-
-You can monitor worker logs using:
-
-```bash
-docker compose logs -f worker
-```
-
----
 
 # 🛑 Stopping the Backend
 
