@@ -20,6 +20,8 @@ app = FastAPI(
     version="1.0.0",
 )
 
+
+
 # Configure CORS
 app.add_middleware(
     CORSMiddleware,
@@ -34,8 +36,6 @@ app.include_router(projectRoutes, prefix="/api/projects")
 app.include_router(projectFilesRoutes, prefix="/api/projects")
 app.include_router(chatRoutes, prefix="/api/chats")
 
-"""
-@app.get("/health")
-async def health_check():
-    return {"status": "healthy", "version": "1.0.0"}
-"""
+# @app.get("/health")
+# async def health_check():
+#     return {"status": "healthy", "version": "1.0.0"}
