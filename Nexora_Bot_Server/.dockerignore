@@ -1,32 +1,15 @@
-# Virtual environments
-.venv
-venv
-
-# Python cache
+.git
+.gitignore
 __pycache__
 *.pyc
 *.pyo
 *.pyd
-.pytest_cache
-.mypy_cache
-
-# Env files
+*.log
+node_modules
 .env
-
-# Git
-.git
-.gitignore
-
-# IDE
-.vscode
-.idea
-
-# Build artifacts
+.env.*
+venv
+.venv
 dist
 build
-
-# OS
-.DS_Store
-
-# Logs
-*.log
+.cache

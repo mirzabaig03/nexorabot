@@ -1,47 +1,4 @@
 # version: "3.9"
-
-# services:
-#   backend:
-#     container_name: nexora_backend
-#     build:
-#       context: .
-#       dockerfile: Dockerfile
-#     command: >
-#       uvicorn src.server:app
-#       --host 0.0.0.0
-#       --port 8000
-#     ports:
-#       - "8000:8000"
-#     env_file:
-#       - .env.docker
-#     depends_on:
-#       - redis
-#     restart: unless-stopped
-
-#   worker:
-#     container_name: nexora_worker
-#     build:
-#       context: .
-#       dockerfile: Dockerfile
-#     command: >
-#       celery -A src.services.celery:celery_app
-#       worker
-#       --loglevel=info
-#     env_file:
-#       - .env.docker
-#     depends_on:
-#       - redis
-#     restart: unless-stopped
-
-#   redis:
-#     container_name: nexora_redis
-#     image: redis:7-alpine
-#     ports:
-#       - "6379:6379"
-#     restart: unless-stopped
-
-# version: "3.9"
-
 # services:
 #   backend:
 #     image: nexora:latest
@@ -93,53 +50,59 @@
 # volumes:
 #   redis_data:
 
+
 version: "3.9"
 
 services:
 
   backend:
-    image: nexora:latest
-    container_name: nexora_backend
     build:
       context: .
       dockerfile: Dockerfile
-    command: >
-      uvicorn src.server:app
-      --host 0.0.0.0
-      --port 8000
-      --reload
+    image: nexora:latest
+    container_name: nexora_backend
+    command:
+      - uvicorn
+      - src.server:app
+      - --host
+      - 0.0.0.0
+      - --port
+      - "8000"
     ports:
       - "8000:8000"
     env_file:
       - .env.docker
-    volumes:
-      - .:/app
     depends_on:
-      - redis
+      redis:
+        condition: service_healthy
     restart: unless-stopped
 
   worker:
     image: nexora:latest
     container_name: nexora_worker
-    command: >
-      celery -A src.services.celery:celery_app
-      worker
-      --loglevel=info
+    command:
+      - celery
+      - -A
+      - src.services.celery:celery_app
+      - worker
+      - --loglevel=info
     env_file:
       - .env.docker
-    volumes:
-      - .:/app
     depends_on:
-      - redis
+      redis:
+        condition: service_healthy
     restart: unless-stopped
 
   redis:
     image: redis:7-alpine
     container_name: nexora_redis
-    ports:
-      - "6379:6379"
     volumes:
       - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
     restart: unless-stopped
 
 volumes:

@@ -9477,3 +9477,5 @@ cffi = ["cffi (>=1.17,<2.0) ; platform_python_implementation != \"PyPy\" and pyt
 lock-version = "2.1"
 python-versions = ">=3.10,<4.0"
 content-hash = "57290111097040a39042fea55ddd32c6314f57f83f2a290b7a45331c338170a4"
+python-docx = "^1.1.2"
+pillow = "^12.1.1"
